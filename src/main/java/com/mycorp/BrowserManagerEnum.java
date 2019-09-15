@@ -3,11 +3,6 @@ package com.mycorp;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.opera.OperaDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -71,17 +66,8 @@ public enum BrowserManagerEnum {
     	
         final DesiredCapabilities dc = new DesiredCapabilities( BrowserType.MOCK, "mock-version", Platform.ANY );
 
-        switch( this ) {
-        case CHROME			: return UtilsWebDriver.getWebDriverByBrowser(this, dc);
-        case FIREFOX		: return UtilsWebDriver.getWebDriverByBrowser(this, dc);
-        case EDGE			: return new EdgeDriver();
-        case IE				: return new InternetExplorerDriver();
-        case MARIONETTE		: return new FirefoxDriver();
-        case OPERA			: return new OperaDriver();
-        case PHANTOMJS		: return new PhantomJSDriver();
-        case NONE: default	: return UtilsWebDriver.getWebDriverByBrowser(this, dc);
+        return UtilsWebDriver.getWebDriverByBrowser(this, dc);
             
-        }
     }
 
 }

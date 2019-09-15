@@ -6,6 +6,7 @@ import java.util.Map;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
@@ -19,16 +20,26 @@ public class UtilsWebDriver {
 	
 	final static File driverChrome = new File("drivers/chromedriver.exe");
 	final static File driverGecko  = new File("drivers/geckodriver.exe");
+	final static File driverEdge  = new File("drivers/msedgedriver.exe");
 	
 	public static WebDriver getWebDriverByBrowser(BrowserManagerEnum browser, DesiredCapabilities  dc) {
 		
 		configureSystem(browser);
     	
+		//Debido a que Opera y PhantomJS esta basado en Chronium, utliza el mismo driver que Chrome, al igual que pasa con Edge e IE
 		switch (browser) {
 		case CHROME:
 			return getChromeDriver(dc);
 		case FIREFOX:
 			return getFirefoxDriver(dc);
+		case EDGE:
+			return getEdgeDriver(dc);
+		case MARIONETTE:
+			return getFirefoxDriver(dc);
+		case OPERA:
+			return getChromeDriver(dc);
+		case PHANTOMJS:
+			return getChromeDriver(dc);
 		default:
 			return getRemoteDriver(dc);
 		}
@@ -40,8 +51,17 @@ public class UtilsWebDriver {
 		case CHROME:
 			System.setProperty("webdriver.chrome.driver", driverChrome.getAbsolutePath());
 			break;
+		case EDGE:
+			System.setProperty("webdriver.edge.driver", driverEdge.getAbsolutePath());
+			break;
 		case FIREFOX:
 			System.setProperty("webdriver.gecko.driver", driverGecko.getAbsolutePath());
+			break;
+		case MARIONETTE:
+			System.setProperty("webdriver.gecko.driver", driverGecko.getAbsolutePath());
+			break;
+		case PHANTOMJS:
+			System.setProperty("webdriver.chrome.driver", driverChrome.getAbsolutePath());
 			break;
 		default:
 			break;
@@ -94,7 +114,18 @@ public class UtilsWebDriver {
 		return mock;
 	}
 	
-	private UtilsWebDriver() {
-		throw new IllegalStateException("Clase utilidad driver selenium");
+	private static EdgeDriver getEdgeDriver(DesiredCapabilities dc) {
+		
+		final EdgeDriver mock = new EdgeDriver(dc) {
+            @Override
+            protected Response execute( final String driverCommand, final Map< String, ? > parameters ) {
+                return new Response();
+            }
+            @Override
+            protected void startSession( final Capabilities desiredCapabilities, final Capabilities requiredCapabilities ) {
+                setSessionId( "mock" );
+            }
+        };
+		return mock;
 	}
 }
