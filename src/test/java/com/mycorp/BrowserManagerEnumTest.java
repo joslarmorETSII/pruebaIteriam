@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
+import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import io.github.bonigarcia.wdm.VoidDriverManager;
 
 
@@ -40,4 +41,16 @@ public class BrowserManagerEnumTest {
         Assertions.assertTrue( of.getDriver() instanceof RemoteWebDriver );
     }
 
+    @Test
+    public void shouldCheckOfFirefox() throws Exception {
+        BrowserManagerEnum of = BrowserManagerEnum.of( "test" );
+        Assertions.assertEquals( BrowserManagerEnum.NONE, of );
+        of = BrowserManagerEnum.of( "perry" );
+        Assertions.assertEquals( BrowserManagerEnum.NONE, of );
+        of = BrowserManagerEnum.of( "firefox" );
+        Assertions.assertEquals( BrowserManagerEnum.FIREFOX, of );
+        Assertions.assertTrue( of.getBrowserManager() instanceof FirefoxDriverManager );
+        Assertions.assertTrue( of.getBrowserManager( "1" ) instanceof FirefoxDriverManager );
+        Assertions.assertTrue( of.getDriver() instanceof RemoteWebDriver );
+    }
 }

@@ -1,12 +1,8 @@
 package com.mycorp;
 
-import java.util.Map;
-
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -14,8 +10,8 @@ import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.remote.Response;
+
+import com.mycorp.utils.UtilsWebDriver;
 
 import io.github.bonigarcia.wdm.BrowserManager;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
@@ -72,38 +68,19 @@ public enum BrowserManagerEnum {
     }
 
     public WebDriver getDriver() {
-        switch( this ) {
-        case CHROME:     return new ChromeDriver();
-        case FIREFOX:    return new FirefoxDriver();
-        case EDGE:       return new EdgeDriver();
-        case IE:         return new InternetExplorerDriver();
-        case MARIONETTE: return new FirefoxDriver();
-        case OPERA:      return new OperaDriver();
-        case PHANTOMJS:  return new PhantomJSDriver();
-        case NONE: default:
-            final DesiredCapabilities dc = new DesiredCapabilities( BrowserType.MOCK, "mock-version", Platform.ANY );
-            final RemoteWebDriver mock = new RemoteWebDriver( dc ) {
-                /**
-                 * {@inheritDoc}
-                 *
-                 * @see RemoteWebDriver#execute(String, Map)
-                 */
-                @Override
-                protected Response execute( final String driverCommand, final Map< String, ? > parameters ) {
-                    return new Response();
-                }
+    	
+        final DesiredCapabilities dc = new DesiredCapabilities( BrowserType.MOCK, "mock-version", Platform.ANY );
 
-                /**
-                 * {@inheritDoc}
-                 *
-                 * @see RemoteWebDriver#startSession(Capabilities, Capabilities)
-                 */
-                @Override
-                protected void startSession( final Capabilities desiredCapabilities, final Capabilities requiredCapabilities ) {
-                    setSessionId( "mock" );
-                }
-            };
-            return mock;
+        switch( this ) {
+        case CHROME			: return UtilsWebDriver.getWebDriverByBrowser(this, dc);
+        case FIREFOX		: return UtilsWebDriver.getWebDriverByBrowser(this, dc);
+        case EDGE			: return new EdgeDriver();
+        case IE				: return new InternetExplorerDriver();
+        case MARIONETTE		: return new FirefoxDriver();
+        case OPERA			: return new OperaDriver();
+        case PHANTOMJS		: return new PhantomJSDriver();
+        case NONE: default	: return UtilsWebDriver.getWebDriverByBrowser(this, dc);
+            
         }
     }
 
