@@ -10,7 +10,7 @@ En esta rama es donde he realizado el primer cambio, la configuración del proye
 
 Cuando la cobertura se completó al 100%, realicé el merge a la ramas develop y master, con el proyecto finalizado.
 
-En este caso, al no tener que realizar ningún cambio sobre la rama master debido a alguna incidencia, no hay rama creada denominada hotfix.
+Para simular una corrección en el entorno de producción, se dejó un caso sin testear, una vez localizado el problema se creó a partir de master la rama "hotfix/caseIE" que solventa el inconveniente. Trás su resolución se mergea con la rama master.
 
 Se ha añadido la librería slf4j para subsanar el error mostrado por consola sobre los log.
 
