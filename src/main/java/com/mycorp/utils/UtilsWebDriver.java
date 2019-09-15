@@ -34,6 +34,8 @@ public class UtilsWebDriver {
 			return getFirefoxDriver(dc);
 		case EDGE:
 			return getEdgeDriver(dc);
+		case IE:
+			return getEdgeDriver(dc);
 		case MARIONETTE:
 			return getFirefoxDriver(dc);
 		case OPERA:
@@ -51,14 +53,20 @@ public class UtilsWebDriver {
 		case CHROME:
 			System.setProperty("webdriver.chrome.driver", driverChrome.getAbsolutePath());
 			break;
-		case EDGE:
-			System.setProperty("webdriver.edge.driver", driverEdge.getAbsolutePath());
-			break;
 		case FIREFOX:
 			System.setProperty("webdriver.gecko.driver", driverGecko.getAbsolutePath());
 			break;
+		case EDGE:
+			System.setProperty("webdriver.edge.driver", driverEdge.getAbsolutePath());
+			break;
+		case IE:
+			System.setProperty("webdriver.edge.driver", driverEdge.getAbsolutePath());
+			break;
 		case MARIONETTE:
 			System.setProperty("webdriver.gecko.driver", driverGecko.getAbsolutePath());
+			break;
+		case OPERA:
+			System.setProperty("webdriver.chrome.driver", driverChrome.getAbsolutePath());
 			break;
 		case PHANTOMJS:
 			System.setProperty("webdriver.chrome.driver", driverChrome.getAbsolutePath());
