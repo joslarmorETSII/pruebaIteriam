@@ -18,9 +18,11 @@ import com.mycorp.BrowserManagerEnum;
 
 public class UtilsWebDriver {
 	
-	final static File driverChrome = new File("drivers/chromedriver.exe");
-	final static File driverGecko  = new File("drivers/geckodriver.exe");
-	final static File driverEdge  = new File("drivers/msedgedriver.exe");
+	private UtilsWebDriver() {}
+	
+	static final File driverChrome = new File("drivers/chromedriver.exe");
+	static final File driverGecko  = new File("drivers/geckodriver.exe");
+	static final File driverEdge  = new File("drivers/msedgedriver.exe");
 	
 	public static WebDriver getWebDriverByBrowser(BrowserManagerEnum browser, DesiredCapabilities  dc) {
 		
@@ -63,7 +65,8 @@ public class UtilsWebDriver {
 	}
 	
 	private static ChromeDriver getChromeDriver(DesiredCapabilities dc) {
-		final ChromeDriver mock = new ChromeDriver( dc ) {
+		return new ChromeDriver( dc ) {
+			
             @Override
             protected Response execute( final String driverCommand, final Map< String, ? > parameters ) {
                 return new Response();
@@ -73,11 +76,11 @@ public class UtilsWebDriver {
                 setSessionId( "mock" );
             }
         };
-		return mock;
+        
 	}
 	
 	private static RemoteWebDriver getRemoteDriver(DesiredCapabilities dc) {
-		final RemoteWebDriver mock = new RemoteWebDriver( dc ) {
+		 return new RemoteWebDriver( dc ) {
             @Override
             protected Response execute( final String driverCommand, final Map< String, ? > parameters ) {
                 return new Response();
@@ -87,7 +90,6 @@ public class UtilsWebDriver {
                 setSessionId( "mock" );
             }
         };
-        return mock;
 	}
 	
 	private static FirefoxDriver getFirefoxDriver(DesiredCapabilities dc) {
@@ -95,7 +97,8 @@ public class UtilsWebDriver {
 		FirefoxBinary binary = new FirefoxBinary(driverGecko);
 		FirefoxProfile profile = new FirefoxProfile();
 		dc.setCapability("marionette", true);
-		final FirefoxDriver mock = new FirefoxDriver(binary, profile, dc) {
+		
+		return new FirefoxDriver(binary, profile, dc) {
             @Override
             protected Response execute( final String driverCommand, final Map< String, ? > parameters ) {
                 return new Response();
@@ -105,12 +108,11 @@ public class UtilsWebDriver {
                 setSessionId( "mock" );
             }
         };
-		return mock;
 	}
 	
 	private static EdgeDriver getEdgeDriver(DesiredCapabilities dc) {
 		
-		final EdgeDriver mock = new EdgeDriver(dc) {
+		return new EdgeDriver(dc) {
             @Override
             protected Response execute( final String driverCommand, final Map< String, ? > parameters ) {
                 return new Response();
@@ -120,6 +122,5 @@ public class UtilsWebDriver {
                 setSessionId( "mock" );
             }
         };
-		return mock;
 	}
 }
