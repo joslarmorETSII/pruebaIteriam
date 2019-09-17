@@ -13,28 +13,47 @@ import io.github.bonigarcia.wdm.EdgeDriverManager;
 @DisplayName("Test navegador Edge")
 public class BrowserManagerEnumEdge {
 
+	private BrowserManagerEnum browserEdge;
+	
 	@BeforeEach
 	public void configSystem() {
 		UtilsWebDriver.configureSystem(BrowserManagerEnum.IE);
+		browserEdge = BrowserManagerEnum.EDGE;
 	}
 	
 	@Test
-	@DisplayName("Obtener driver Edge")
-    public void shouldCheckOfEdge() throws Exception {
-        BrowserManagerEnum of = BrowserManagerEnum.of( "test" );
-        Assertions.assertEquals( BrowserManagerEnum.NONE, of );
-        of = BrowserManagerEnum.of( "perry" );
-        Assertions.assertEquals( BrowserManagerEnum.NONE, of );
-        of = BrowserManagerEnum.of( "edge" );
-        Assertions.assertEquals( BrowserManagerEnum.EDGE, of );
-    }    
-	
-	@Test
-    @DisplayName("Obtener manager Edge")
-    public void checkManagerBrowserEdge() throws Exception {
-        BrowserManagerEnum of = BrowserManagerEnum.of( "edge" );
-        Assertions.assertTrue( of.getBrowserManager() instanceof EdgeDriverManager );
-        Assertions.assertTrue( of.getBrowserManager( "1" ) instanceof EdgeDriverManager );
-        Assertions.assertTrue( of.getDriver() instanceof RemoteWebDriver );
+    @DisplayName("Valor enumerado correcto")
+    public void shouldCheckOf() throws Exception {
+        Assertions.assertEquals( browserEdge, BrowserManagerEnum.of( "edge" ) );
+    }
+    
+    @Test
+    @DisplayName("Valor enumerado incorrecto")
+    public void shouldCheckOfIncorrect() throws Exception {
+    	Assertions.assertNotEquals( browserEdge, BrowserManagerEnum.of( "perry" ) );
+    }
+    
+    @Test
+    @DisplayName("Valor enumerado null")
+    public void shouldCheckOfNull() throws Exception {
+    	Assertions.assertNotEquals( browserEdge, BrowserManagerEnum.of( "null" ) );
+    }
+    
+    @Test
+    @DisplayName("Obtener manager sin parametro")
+    public void checkManagerBrowserNONE() throws Exception {
+        Assertions.assertTrue( browserEdge.getBrowserManager() instanceof EdgeDriverManager );
+    }
+    
+    @Test
+    @DisplayName("Obtener manager con parametro")
+    public void checkManagerBrowserNONEWithParameter() throws Exception {
+        Assertions.assertTrue( browserEdge.getBrowserManager( "1" ) instanceof EdgeDriverManager );
+    }
+    
+    @Test
+    @DisplayName("Obtener driver")
+    public void checkDriverBrowserNONE() throws Exception {
+        Assertions.assertTrue( browserEdge.getDriver() instanceof RemoteWebDriver );
     }
 }

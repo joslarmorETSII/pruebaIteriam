@@ -2,7 +2,6 @@ package com.mycorp;
 
 
 import org.junit.jupiter.api.Assertions;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,31 +11,50 @@ import com.mycorp.utils.UtilsWebDriver;
 
 import io.github.bonigarcia.wdm.PhantomJsDriverManager;
 
-@DisplayName("Test navegador PhathomJS")
+@DisplayName("Test navegador PhanthomJS")
 public class BrowserManagerEnumPhathomJS {
 
+	private BrowserManagerEnum browserPhanthonJS;
+	
 	@BeforeEach
 	public void configSystem() {
 		UtilsWebDriver.configureSystem(BrowserManagerEnum.CHROME);
+		browserPhanthonJS = BrowserManagerEnum.PHANTOMJS;
 	}
 	
-    @Test
-    @DisplayName("Obtener driver PhathomJS")
-    public void shouldCheckOfPhanthon() throws Exception {
-        BrowserManagerEnum of = BrowserManagerEnum.of( "test" );
-        Assertions.assertEquals( BrowserManagerEnum.NONE, of );
-        of = BrowserManagerEnum.of( "perry" );
-        Assertions.assertEquals( BrowserManagerEnum.NONE, of );
-        of = BrowserManagerEnum.of( "phantomjs" );
-        Assertions.assertEquals( BrowserManagerEnum.PHANTOMJS, of );
+	@Test
+    @DisplayName("Valor enumerado correcto")
+    public void shouldCheckOf() throws Exception {
+        Assertions.assertEquals( browserPhanthonJS, BrowserManagerEnum.of( "phantomjs" ) );
     }
     
     @Test
-    @DisplayName("Obtener manager PhathomJS")
-    public void checkManagerBrowserPhathomJS() {
-        BrowserManagerEnum of = BrowserManagerEnum.of( "phantomjs" );
-    	Assertions.assertTrue( of.getBrowserManager() instanceof PhantomJsDriverManager);
-        Assertions.assertTrue( of.getBrowserManager( "1" ) instanceof PhantomJsDriverManager );
-        Assertions.assertTrue( of.getDriver() instanceof RemoteWebDriver );
+    @DisplayName("Valor enumerado incorrecto")
+    public void shouldCheckOfIncorrect() throws Exception {
+    	Assertions.assertNotEquals( browserPhanthonJS, BrowserManagerEnum.of( "perry" ) );
+    }
+    
+    @Test
+    @DisplayName("Valor enumerado null")
+    public void shouldCheckOfNull() throws Exception {
+    	Assertions.assertNotEquals( browserPhanthonJS, BrowserManagerEnum.of( "null" ) );
+    }
+    
+    @Test
+    @DisplayName("Obtener manager sin parametro")
+    public void checkManagerBrowserNONE() throws Exception {
+        Assertions.assertTrue( browserPhanthonJS.getBrowserManager() instanceof PhantomJsDriverManager );
+    }
+    
+    @Test
+    @DisplayName("Obtener manager con parametro")
+    public void checkManagerBrowserNONEWithParameter() throws Exception {
+        Assertions.assertTrue( browserPhanthonJS.getBrowserManager( "1" ) instanceof PhantomJsDriverManager );
+    }
+    
+    @Test
+    @DisplayName("Obtener driver")
+    public void checkDriverBrowserNONE() throws Exception {
+        Assertions.assertTrue( browserPhanthonJS.getDriver() instanceof RemoteWebDriver );
     }
 }

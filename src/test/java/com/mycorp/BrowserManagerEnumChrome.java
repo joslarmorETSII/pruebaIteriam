@@ -14,31 +14,48 @@ import io.github.bonigarcia.wdm.ChromeDriverManager;
 @DisplayName("Test navegador Chrome")
 public class BrowserManagerEnumChrome {
 
+	private BrowserManagerEnum browserChrome;
+	
 	@BeforeEach
 	public void configSystem() {
 		UtilsWebDriver.configureSystem(BrowserManagerEnum.CHROME);
+		browserChrome = BrowserManagerEnum.CHROME;
 	}
 	
-    @Test
-	@DisplayName("Obtener driver Chrome")
-    public void shouldCheckOfChrome() throws Exception {
-        BrowserManagerEnum of = BrowserManagerEnum.of( "test" );
-        Assertions.assertEquals( BrowserManagerEnum.NONE, of );
-        of = BrowserManagerEnum.of( "perry" );
-        Assertions.assertEquals( BrowserManagerEnum.NONE, of );
-        of = BrowserManagerEnum.of( "chrome" );
-        Assertions.assertEquals( BrowserManagerEnum.CHROME, of );
-       
-        
+	@Test
+    @DisplayName("Valor enumerado correcto")
+    public void shouldCheckOf() throws Exception {
+        Assertions.assertEquals( browserChrome, BrowserManagerEnum.of( "chrome" ) );
     }
     
     @Test
-    @DisplayName("Obtener manager Chrome")
-    public void checkManagerBrowserChrome() throws Exception {
-        BrowserManagerEnum of = BrowserManagerEnum.of( "chrome" );
-        Assertions.assertTrue( of.getBrowserManager() instanceof ChromeDriverManager );
-        Assertions.assertTrue( of.getBrowserManager( "1" ) instanceof ChromeDriverManager );
-        Assertions.assertTrue( of.getDriver() instanceof RemoteWebDriver );
+    @DisplayName("Valor enumerado incorrecto")
+    public void shouldCheckOfIncorrect() throws Exception {
+    	Assertions.assertNotEquals( browserChrome, BrowserManagerEnum.of( "perry" ) );
+    }
+    
+    @Test
+    @DisplayName("Valor enumerado null")
+    public void shouldCheckOfNull() throws Exception {
+    	Assertions.assertNotEquals( browserChrome, BrowserManagerEnum.of( "null" ) );
+    }
+    
+    @Test
+    @DisplayName("Obtener manager sin parametro")
+    public void checkManagerBrowserNONE() throws Exception {
+        Assertions.assertTrue( browserChrome.getBrowserManager() instanceof ChromeDriverManager );
+    }
+    
+    @Test
+    @DisplayName("Obtener manager con parametro")
+    public void checkManagerBrowserNONEWithParameter() throws Exception {
+        Assertions.assertTrue( browserChrome.getBrowserManager( "1" ) instanceof ChromeDriverManager );
+    }
+    
+    @Test
+    @DisplayName("Obtener driver")
+    public void checkDriverBrowserNONE() throws Exception {
+        Assertions.assertTrue( browserChrome.getDriver() instanceof RemoteWebDriver );
     }
 
 }

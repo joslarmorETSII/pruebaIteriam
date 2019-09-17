@@ -14,30 +14,48 @@ import io.github.bonigarcia.wdm.FirefoxDriverManager;
 @DisplayName("Test navegador Firefox")
 public class BrowserManagerEnumFirefox {
 
+	private BrowserManagerEnum browserFirefox;
+	
 	@BeforeEach
 	public void configSystem() {
 		UtilsWebDriver.configureSystem(BrowserManagerEnum.FIREFOX);
+		browserFirefox = BrowserManagerEnum.FIREFOX;
 	}
 	
-    @Test
-    @DisplayName("Obtener driver Firefox")
-    public void shouldCheckOfFirefox() throws Exception {
-        BrowserManagerEnum of = BrowserManagerEnum.of( "test" );
-        Assertions.assertEquals( BrowserManagerEnum.NONE, of );
-        of = BrowserManagerEnum.of( "perry" );
-        Assertions.assertEquals( BrowserManagerEnum.NONE, of );
-        of = BrowserManagerEnum.of( "firefox" );
-        Assertions.assertEquals( BrowserManagerEnum.FIREFOX, of );
-        
+	@Test
+    @DisplayName("Valor enumerado correcto")
+    public void shouldCheckOf() throws Exception {
+        Assertions.assertEquals( browserFirefox, BrowserManagerEnum.of( "firefox" ) );
     }
     
     @Test
-    @DisplayName("Obtener manager Firefox")
-    public void checkManagerBrowserFirefox() throws Exception {
-        BrowserManagerEnum of = BrowserManagerEnum.of( "firefox" );
-        Assertions.assertTrue( of.getBrowserManager() instanceof FirefoxDriverManager );
-        Assertions.assertTrue( of.getBrowserManager( "1" ) instanceof FirefoxDriverManager );
-        Assertions.assertTrue( of.getDriver() instanceof RemoteWebDriver );
+    @DisplayName("Valor enumerado incorrecto")
+    public void shouldCheckOfIncorrect() throws Exception {
+    	Assertions.assertNotEquals( browserFirefox, BrowserManagerEnum.of( "perry" ) );
+    }
+    
+    @Test
+    @DisplayName("Valor enumerado null")
+    public void shouldCheckOfNull() throws Exception {
+    	Assertions.assertNotEquals( browserFirefox, BrowserManagerEnum.of( "null" ) );
+    }
+    
+    @Test
+    @DisplayName("Obtener manager sin parametro")
+    public void checkManagerBrowserNONE() throws Exception {
+        Assertions.assertTrue( browserFirefox.getBrowserManager() instanceof FirefoxDriverManager );
+    }
+    
+    @Test
+    @DisplayName("Obtener manager con parametro")
+    public void checkManagerBrowserNONEWithParameter() throws Exception {
+        Assertions.assertTrue( browserFirefox.getBrowserManager( "1" ) instanceof FirefoxDriverManager );
+    }
+    
+    @Test
+    @DisplayName("Obtener driver")
+    public void checkDriverBrowserNONE() throws Exception {
+        Assertions.assertTrue( browserFirefox.getDriver() instanceof RemoteWebDriver );
     }
     
 }
