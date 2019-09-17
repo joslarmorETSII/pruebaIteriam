@@ -22,6 +22,8 @@ Esta clase de utilidad tiene dos métodos principales:
 
 2.- configureSystem(), dependiendo del browser que se esté ejecutando, configura el sistema para que se pueda realizar la prueba, ya que cada browser tiene configuraciones independientes como el driver que lo ejecuta (chrome, gecko y edge).
 
+Por otro lado, se ha utilizado SonarLint para el aseguramiento y optimización del código, dando como resultado 0 bugs, code smell, etc.
+
 Para llevar a cabo la compilación del proyecto se ha de ejecutar el comando:
 
 --> mvn package
