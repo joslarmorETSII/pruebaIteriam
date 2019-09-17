@@ -69,5 +69,5 @@ public enum BrowserManagerEnum {
         return UtilsWebDriver.getWebDriverByBrowser(this, dc);
             
     }
-
+    
 }

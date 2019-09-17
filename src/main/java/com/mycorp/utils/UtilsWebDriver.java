@@ -24,8 +24,6 @@ public class UtilsWebDriver {
 	
 	public static WebDriver getWebDriverByBrowser(BrowserManagerEnum browser, DesiredCapabilities  dc) {
 		
-		configureSystem(browser);
-    	
 		//Debido a que Opera y PhantomJS esta basado en Chronium, utliza el mismo driver que Chrome, al igual que pasa con Edge e IE
 		switch (browser) {
 		case CHROME:
@@ -47,7 +45,7 @@ public class UtilsWebDriver {
 		}
 	}
 	
-	private static void configureSystem(BrowserManagerEnum browser) {
+	public static void configureSystem(BrowserManagerEnum browser) {
 		
 		switch (browser) {
 		case CHROME:
@@ -56,20 +54,8 @@ public class UtilsWebDriver {
 		case FIREFOX:
 			System.setProperty("webdriver.gecko.driver", driverGecko.getAbsolutePath());
 			break;
-		case EDGE:
-			System.setProperty("webdriver.edge.driver", driverEdge.getAbsolutePath());
-			break;
 		case IE:
 			System.setProperty("webdriver.edge.driver", driverEdge.getAbsolutePath());
-			break;
-		case MARIONETTE:
-			System.setProperty("webdriver.gecko.driver", driverGecko.getAbsolutePath());
-			break;
-		case OPERA:
-			System.setProperty("webdriver.chrome.driver", driverChrome.getAbsolutePath());
-			break;
-		case PHANTOMJS:
-			System.setProperty("webdriver.chrome.driver", driverChrome.getAbsolutePath());
 			break;
 		default:
 			break;
